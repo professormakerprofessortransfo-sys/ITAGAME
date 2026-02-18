@@ -17,6 +17,8 @@ export enum AdminScreen {
   SETTINGS = 'settings'
 }
 
+export type MissionType = 'quiz' | 'upload' | 'code' | 'interactive';
+
 export interface UserStats {
   name: string;
   level: number;
@@ -36,6 +38,8 @@ export interface Mission {
   maxProgress: number;
   completed: boolean;
   status?: 'pending' | 'approved' | 'rejected';
+  type?: MissionType;
+  content?: any; // For quiz questions or interactive data
 }
 
 export interface StudentRecord {

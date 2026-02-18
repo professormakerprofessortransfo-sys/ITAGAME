@@ -10,6 +10,7 @@ import AdminLayout from './components/AdminLayout';
 import AdminDashboard from './screens/admin/AdminDashboard';
 import StudentManager from './screens/admin/StudentManager';
 import ValidationPortal from './screens/admin/ValidationPortal';
+import MissionManager from './screens/admin/MissionManager';
 import { Screen, AdminScreen, UserStats } from './types';
 
 const App: React.FC = () => {
@@ -56,6 +57,9 @@ const App: React.FC = () => {
         case AdminScreen.OVERVIEW: return <AdminDashboard />;
         case AdminScreen.STUDENTS: return <StudentManager />;
         case AdminScreen.VALIDATION: return <ValidationPortal />;
+        case AdminScreen.MISSIONS: return <MissionManager />;
+        case AdminScreen.ECONOMY: return <div className="p-8"><h1 className="text-3xl font-bold">Gestão de Economia & Loja</h1><p className="mt-4 text-slate-400">Em desenvolvimento: Configure preços e itens da loja CEITEC.</p></div>;
+        case AdminScreen.SETTINGS: return <div className="p-8"><h1 className="text-3xl font-bold">Configurações Escolares</h1><p className="mt-4 text-slate-400">Personalize o visual e as regras de pontuação da ITAGAME.</p></div>;
         default: return <AdminDashboard />;
       }
     };

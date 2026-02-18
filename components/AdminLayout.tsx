@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { AdminScreen } from '../types';
 
 interface AdminLayoutProps {
@@ -10,6 +10,8 @@ interface AdminLayoutProps {
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children, activeScreen, onNavigate, onLogout }) => {
+  const [showMissionDropdown, setShowMissionDropdown] = useState(false);
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 flex flex-col md:flex-row font-outfit">
       {/* Sidebar */}
@@ -87,19 +89,54 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, activeScreen, onNav
           <h2 className="text-xl font-bold capitalize">
             {activeScreen.replace('-', ' ')}
           </h2>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 relative">
              <button className="p-2.5 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors relative">
                <span>🔔</span>
                <div className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-slate-800"></div>
              </button>
-             <button className="px-4 py-2 bg-violet-600 rounded-xl font-bold text-xs hover:bg-violet-500 transition-colors flex items-center gap-2">
-               <span>+</span>
-               <span>Nova Missão</span>
-             </button>
+             
+             <div className="relative">
+                <button 
+                  onClick={() => setShowMissionDropdown(!showMissionDropdown)}
+                  className="px-4 py-2 bg-violet-600 rounded-xl font-bold text-xs hover:bg-violet-500 transition-colors flex items-center gap-2"
+                >
+                  <span>+</span>
+                  <span>Nova Missão</span>
+                  <span className="opacity-50">▾</span>
+                </button>
+                
+                {showMissionDropdown && (
+                  <>
+                    <div className="fixed inset-0 z-10" onClick={() => setShowMissionDropdown(false)} />
+                    <div className="absolute top-full right-0 mt-2 w-48 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl z-20 overflow-hidden">
+                      <button 
+                        onClick={() => { onNavigate(AdminScreen.MISSIONS); setShowMissionDropdown(false); }}
+                        className="w-full text-left px-5 py-3 hover:bg-white/5 flex items-center gap-3 transition-colors border-b border-white/5"
+                      >
+                        <span className="text-lg">⌨️</span>
+                        <div className="flex flex-col">
+                          <span className="text-xs font-bold">Manual</span>
+                          <span className="text-[9px] text-slate-500">Criar do zero</span>
+                        </div>
+                      </button>
+                      <button 
+                        onClick={() => { onNavigate(AdminScreen.MISSIONS); setShowMissionDropdown(false); }}
+                        className="w-full text-left px-5 py-3 hover:bg-white/5 flex items-center gap-3 transition-colors"
+                      >
+                        <span className="text-lg">✨</span>
+                        <div className="flex flex-col">
+                          <span className="text-xs font-bold">Com IA</span>
+                          <span className="text-[9px] text-slate-500">Gerar desafios</span>
+                        </div>
+                      </button>
+                    </div>
+                  </>
+                )}
+             </div>
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-8 bg-[#020617]">
+        <div className="flex-1 overflow-y-auto p-8 bg-[#020617] custom-scrollbar">
           {children}
         </div>
       </main>
