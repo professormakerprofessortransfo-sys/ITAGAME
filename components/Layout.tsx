@@ -7,26 +7,46 @@ interface LayoutProps {
   activeScreen: Screen;
   stats: UserStats;
   onNavigate: (screen: Screen) => void;
+  onLogout: () => void;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, activeScreen, stats, onNavigate }) => {
+const Layout: React.FC<LayoutProps> = ({ children, activeScreen, stats, onNavigate, onLogout }) => {
   return (
     <div className="max-w-md mx-auto min-h-screen bg-slate-950 flex flex-col relative font-fredoka">
       {/* Top Persistent Bar */}
-      <div className="sticky top-0 z-50 px-6 py-4 flex justify-between items-center bg-slate-950/80 backdrop-blur-xl border-b border-white/5">
-        <div className="flex items-center gap-1">
-          <span className="text-xl font-bold tracking-tighter">ITA</span>
-          <span className="text-xl font-bold tracking-tighter text-cyan-400">GAME</span>
+      <div className="sticky top-0 z-50 px-6 py-4 flex flex-col gap-3 bg-slate-950/80 backdrop-blur-xl border-b border-white/5">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-1">
+            <span className="text-xl font-bold tracking-tighter">ITA</span>
+            <span className="text-xl font-bold tracking-tighter text-cyan-400">GAME</span>
+          </div>
+          
+          <button 
+            onClick={onLogout}
+            className="text-[10px] font-bold text-slate-500 hover:text-rose-400 flex items-center gap-1 transition-colors uppercase tracking-widest bg-white/5 px-3 py-1 rounded-full"
+          >
+            <span>Sair</span>
+            <span>🚪</span>
+          </button>
         </div>
         
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-500/20">
-            <span className="text-sm">💰</span>
-            <span className="text-xs font-bold text-amber-400">{stats.coins}</span>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-500/20">
+              <span className="text-sm">💰</span>
+              <span className="text-xs font-bold text-amber-400">{stats.coins}</span>
+            </div>
+            <div className="flex items-center gap-1 bg-violet-500/10 px-3 py-1.5 rounded-full border border-violet-500/20">
+              <span className="text-sm">⚡</span>
+              <span className="text-xs font-bold text-violet-400">{stats.xp}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-1 bg-violet-500/10 px-3 py-1.5 rounded-full border border-violet-500/20">
-            <span className="text-sm">⚡</span>
-            <span className="text-xs font-bold text-violet-400">{stats.xp}</span>
+          
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-bold text-slate-400 uppercase">Lvl {stats.level}</span>
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center text-sm shadow-lg border border-white/10">
+              {stats.avatar}
+            </div>
           </div>
         </div>
       </div>

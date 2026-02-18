@@ -41,6 +41,8 @@ const App: React.FC = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setIsAdmin(false);
+    // Reset to initial student dashboard for next student login
+    setCurrentScreen(Screen.DASHBOARD);
   };
 
   if (!isLoggedIn) {
@@ -90,6 +92,7 @@ const App: React.FC = () => {
       activeScreen={currentScreen} 
       stats={userStats} 
       onNavigate={setCurrentScreen}
+      onLogout={handleLogout}
     >
       {renderStudentScreen()}
     </Layout>
